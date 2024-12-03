@@ -1,0 +1,264 @@
+import java.util.*;
+import java.util.Random;
+
+class Student {
+    String name;
+    int id;
+    String course;
+    int attendance;
+    String grade;
+
+    Student(String name, int id, String course) {
+        this.name = name;
+        this.id = id;
+        this.course = course;
+        this.attendance = 0;
+        this.grade = "F";  // Default grade is F
+    }
+
+    void updateAttendance(int days) {
+        if (this.attendance + days <= 100) {
+            this.attendance += days;
+        } else {
+            this.attendance = 100;  // Maximum attendance is 100
+        }
+    }
+
+    void updateGrade(int grade) {
+        this.grade = convertGradeToLetter(grade);
+    }
+
+    String convertGradeToLetter(int grade) {
+        if (grade >= 90) {
+            return "A+";
+        } else if (grade >= 80) {
+            return "A";
+        } else if (grade >= 70) {
+            return "B+";
+        } else if (grade >= 60) {
+            return "B";
+        } else if (grade >= 50) {
+            return "C+";
+        } else if (grade >= 40) {
+            return "C";
+        } else {
+            return "D";  // Changed to "D" instead of "F" for the passing grade
+        }
+    }
+
+    void displayStudent() {
+        System.out.println("ID: " + id + ", Name: " + name + ", Course: " + course);
+    }
+
+    void displayAttendance() {
+        System.out.println("ID: " + id + ", Name: " + name + ", Attendance: " + attendance + " days");
+    }
+
+    void displayGrade() {
+        System.out.println("ID: " + id + ", Name: " + name + ", Grade: " + grade);
+    }
+}
+
+class Faculty {
+    String name;
+    String subject;
+
+    Faculty(String name, String subject) {
+        this.name = name;
+        this.subject = subject;
+    }
+
+    void displayFaculty() {
+        System.out.println("Faculty Name: " + name + ", Subject: " + subject);
+    }
+}
+
+class Course {
+    String courseName;
+    int courseId;
+
+    Course(String courseName, int courseId) {
+        this.courseName = courseName;
+        this.courseId = courseId;
+    }
+
+    void displayCourse() {
+        System.out.println("Course ID: " + courseId + ", Course Name: " + courseName);
+    }
+}
+
+public class Main {
+    static List<Student> students = new ArrayList<>();
+    static List<Faculty> faculties = new ArrayList<>();
+    static List<Course> courses = new ArrayList<>();
+    static Scanner sc = new Scanner(System.in);
+    static Random random = new Random();
+
+    public static void main(String[] args) {
+        // Predefined Students
+        students.add(new Student("Alice", 101, "Computer Science"));
+        students.add(new Student("Bob", 102, "Mechanical Engineering"));
+        students.add(new Student("Charlie", 103, "Electrical Engineering"));
+        students.add(new Student("David", 104, "Civil Engineering"));
+        students.add(new Student("Eva", 105, "Information Technology"));
+        students.add(new Student("Frank", 106, "Chemical Engineering"));
+        students.add(new Student("Grace", 107, "Aerospace Engineering"));
+        students.add(new Student("Hank", 108, "Automobile Engineering"));
+        students.add(new Student("Ivy", 109, "Biomedical Engineering"));
+        students.add(new Student("Jack", 110, "Mining Engineering"));
+        students.add(new Student("Kara", 111, "Software Engineering"));
+        students.add(new Student("Liam", 112, "Electronics and Communication"));
+        students.add(new Student("Mia", 113, "Mechatronics"));
+        students.add(new Student("Noah", 114, "Nanotechnology"));
+        students.add(new Student("Olivia", 115, "Robotics"));
+        students.add(new Student("Paul", 116, "Petroleum Engineering"));
+        students.add(new Student("Quinn", 117, "Marine Engineering"));
+        students.add(new Student("Ryan", 118, "Biotechnology"));
+        students.add(new Student("Sophia", 119, "Agricultural Engineering"));
+        students.add(new Student("Tom", 120, "Textile Engineering"));
+
+        // Predefined Faculties
+        faculties.add(new Faculty("Dr. Smith", "Computer Science"));
+        faculties.add(new Faculty("Dr. Johnson", "Mechanical Engineering"));
+        faculties.add(new Faculty("Dr. Lee", "Electrical Engineering"));
+        faculties.add(new Faculty("Dr. Taylor", "Civil Engineering"));
+        faculties.add(new Faculty("Dr. Clark", "Information Technology"));
+
+        // Predefined Courses
+        courses.add(new Course("Computer Science", 201));
+        courses.add(new Course("Mechanical Engineering", 202));
+        courses.add(new Course("Electrical Engineering", 203));
+        courses.add(new Course("Civil Engineering", 204));
+        courses.add(new Course("Information Technology", 205));
+        courses.add(new Course("Chemical Engineering", 206));
+        courses.add(new Course("Aerospace Engineering", 207));
+        courses.add(new Course("Automobile Engineering", 208));
+        courses.add(new Course("Biomedical Engineering", 209));
+        courses.add(new Course("Mining Engineering", 210));
+
+        // Randomly assigning attendance and grades to students
+        for (Student s : students) {
+            s.attendance = random.nextInt(101); // Random attendance between 0 and 100
+            s.grade = s.convertGradeToLetter(random.nextInt(101)); // Random grade between 0 and 100
+        }
+
+        int choice;
+        do {
+            System.out.println("\n--- College Management System ---");
+            System.out.println("1. Add Student");
+            System.out.println("2. Add Faculty");
+            System.out.println("3. Add Course");
+            System.out.println("4. Display Students");
+            System.out.println("5. Display Faculties");
+            System.out.println("6. Display Courses");
+            System.out.println("7. Display Attendance");
+            System.out.println("8. Display Grades");
+            System.out.println("9. Update Attendance");
+            System.out.println("10. Update Grade");
+            System.out.println("11. Exit");
+            System.out.print("Enter your choice: ");
+            choice = sc.nextInt();
+            sc.nextLine();  // Consume newline
+
+            switch(choice) {
+                case 1:
+                    // Add Student
+                    System.out.print("Enter student name: ");
+                    String name = sc.nextLine();
+                    System.out.print("Enter student ID: ");
+                    int id = sc.nextInt();
+                    sc.nextLine();  // Consume newline
+                    System.out.print("Enter student course: ");
+                    String course = sc.nextLine();
+                    students.add(new Student(name, id, course));
+                    System.out.println("Student added successfully!");
+                    break;
+                case 2:
+                    // Add Faculty
+                    System.out.print("Enter faculty name: ");
+                    String facultyName = sc.nextLine();
+                    System.out.print("Enter subject: ");
+                    String subject = sc.nextLine();
+                    faculties.add(new Faculty(facultyName, subject));
+                    System.out.println("Faculty added successfully!");
+                    break;
+                case 3:
+                    // Add Course
+                    System.out.print("Enter course name: ");
+                    String courseName = sc.nextLine();
+                    System.out.print("Enter course ID: ");
+                    int courseId = sc.nextInt();
+                    sc.nextLine();  // Consume newline
+                    courses.add(new Course(courseName, courseId));
+                    System.out.println("Course added successfully!");
+                    break;
+                case 4:
+                    // Display Students
+                    for (Student s : students) {
+                        s.displayStudent();
+                    }
+                    break;
+                case 5:
+                    // Display Faculties
+                    for (Faculty f : faculties) {
+                        f.displayFaculty();
+                    }
+                    break;
+                case 6:
+                    // Display Courses
+                    for (Course c : courses) {
+                        c.displayCourse();
+                    }
+                    break;
+                case 7:
+                    // Display Attendance
+                    for (Student s : students) {
+                        s.displayAttendance();
+                    }
+                    break;
+                case 8:
+                    // Display Grades
+                    for (Student s : students) {
+                        s.displayGrade();
+                    }
+                    break;
+                case 9:
+                    // Update Attendance
+                    System.out.print("Enter student ID to update attendance: ");
+                    int updateId = sc.nextInt();
+                    System.out.print("Enter attendance days to add: ");
+                    int days = sc.nextInt();
+                    sc.nextLine();  // Consume newline
+                    for (Student s : students) {
+                        if (s.id == updateId) {
+                            s.updateAttendance(days);
+                            System.out.println("Attendance updated successfully!");
+                            break;
+                        }
+                    }
+                    break;
+                case 10:
+                    // Update Grade
+                    System.out.print("Enter student ID to update grade: ");
+                    int updateGradeId = sc.nextInt();
+                    System.out.print("Enter new grade (0-100): ");
+                    int newGrade = sc.nextInt();
+                    sc.nextLine();  // Consume newline
+                    for (Student s : students) {
+                        if (s.id == updateGradeId) {
+                            s.updateGrade(newGrade);
+                            System.out.println("Grade updated successfully!");
+                            s.displayGrade();  // Display updated grade
+                            break;
+                        }
+                    }
+                    break;
+                case 11:
+                    System.out.println("Exiting the system...");
+                    break;
+                default:
+                    System.out.println("Invalid choice, please try again.");
+            }
+        } while (choice != 11);
+    }
+}
